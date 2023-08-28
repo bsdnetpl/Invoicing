@@ -5,7 +5,7 @@ using System.Reflection.Metadata;
 
 namespace Invoicing.Services
 {
-    public class InvoceService : IInvoce
+    public class InvoceService : IInvoceService
     {
         private readonly ConnectMssql _connectMssql;
 

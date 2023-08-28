@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ConnectMssql>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
-builder.Services.AddScoped<IInvoce, InvoceService>();
+builder.Services.AddScoped<IInvoceService, InvoceService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

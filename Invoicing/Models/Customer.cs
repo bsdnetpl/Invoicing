@@ -12,6 +12,7 @@
         public string PostalCode { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
+        public string email { get; set; }
         public string Regon { get; set; }
         public DateTime DateTimeCreated { get; set; }
     }

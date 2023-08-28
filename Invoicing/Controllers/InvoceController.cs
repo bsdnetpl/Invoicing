@@ -10,9 +10,9 @@ namespace Invoicing.Controllers
     [ApiController]
     public class InvoceController : ControllerBase
     {
-        private readonly IInvoce _iinvoce;
+        private readonly IInvoceService _iinvoce;
 
-        public InvoceController(IInvoce iinvoce)
+        public InvoceController(IInvoceService iinvoce)
         {
             _iinvoce = iinvoce;
         }

@@ -4,7 +4,7 @@ using Invoicing.Models;
 
 namespace Invoicing.Services
 {
-    public interface IInvoce
+    public interface IInvoceService
     {
         public InvoceDB addInvoceDB(InvoceDB invoceDB);
 
