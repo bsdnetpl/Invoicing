@@ -4,11 +4,11 @@ using System;
 
 namespace Invoicing.Models
 {
-    public class AutomapperConfig:Profile
+    public class AutoMapperConfig:Profile
     {
-        public AutomapperConfig()
+        public AutoMapperConfig()
         {
-            CreateMap<Customer, CustomerDTO>();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
         }
     }
 }

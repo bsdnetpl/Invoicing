@@ -6,8 +6,8 @@ namespace Invoicing.Services
     {
         Task<Customer> AddCustomerAsync(CustomerDTO customerDTO);
         Task<bool> DeleteCustomerAsync(Guid idUser);
-        Task<Customer> EditCustomerAsync(CustomerDTO customerDTO);
-        Task<Customer> SeekCustomerByNameAsync(string name);
-        Task<Customer> SeekCustomerByNipAsync(string nip);
+        Task<bool> EditCustomerAsync(CustomerDTO customerDTO, Guid guid);
+        Task<List<Customer>> SeekCustomerByNameAsync(string name);
+        Task<List<Customer>> SeekCustomerByNipAsync(string nip);
     }
 }

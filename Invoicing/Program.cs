@@ -1,4 +1,5 @@
 using Invoicing.DB;
+using Invoicing.Models;
 using Invoicing.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ConnectMssql>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
 builder.Services.AddScoped<IInvoceService, InvoceService>();
+builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+builder.Services.AddScoped<ICustomerServices, CustomerServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
