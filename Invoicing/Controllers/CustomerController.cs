@@ -1,7 +1,11 @@
-﻿using Invoicing.DTO;
+﻿using FluentValidation;
+using FluentValidation.Results;
+using Invoicing.DTO;
 using Invoicing.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Invoicing.Controllers
 {
@@ -10,30 +14,56 @@ namespace Invoicing.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerServices _customerServices;
+        private readonly IValidator<CustomerDTO> _validator;
 
-        public CustomerController(ICustomerServices customerServices)
+
+        public CustomerController(ICustomerServices customerServices, IValidator<CustomerDTO> validator)
         {
             _customerServices = customerServices;
+            _validator = validator;
         }
         [HttpDelete("DeleteCustomer")]
         public async Task<bool> DeleteCustomer(Guid idUser)
         {
-            return await _customerServices.DeleteCustomerAsync(idUser);
+
+                return await _customerServices.DeleteCustomerAsync(idUser);
+            
         }
         [HttpPost("AddCustomer")]
-        public async Task<Customer> AddCustomerAsync(CustomerDTO customerDTO)
+        public async Task <ActionResult<Customer>> AddCustomerAsync([FromBody]  CustomerDTO customerDTO)
         {
-            return await _customerServices.AddCustomerAsync(customerDTO);
+        ValidationResult result = _validator.Validate(customerDTO);
+
+            if (result.IsValid)
+            {
+                return await _customerServices.AddCustomerAsync(customerDTO);
+            }
+            return BadRequest(result);
         }
         [HttpPut("EditUser")]
-        public async Task<bool> EditCustomerAsync(CustomerDTO customerDTO, Guid guid)
+        public async Task<ActionResult<bool>> EditCustomerAsync([FromBody]  CustomerDTO customerDTO, Guid guid)
         {
-            return await _customerServices.EditCustomerAsync(customerDTO, guid);
+            if(guid == Guid.Empty) 
+            {
+                return BadRequest("Wrong guid !!");
+            }
+            ValidationResult result = _validator.Validate(customerDTO);
+
+            if (result.IsValid)
+            {
+                return await _customerServices.EditCustomerAsync(customerDTO, guid);
+            }
+            return BadRequest(result);
         }
-        //[HttpGet("GetUserByNip")]
-        //public async Task<List<Customer>> SeekCustomerByNip(string nip)
-        //{
-        //    return await _customerServices.SeekCustomerByNipAsync(nip);
-        //}
+        [HttpGet("GetUserByNip")]
+        public async Task<ActionResult<List<Customer>>> SeekCustomerByNip(string nip)
+        {
+            var result =  await _customerServices.SeekCustomerByNipAsync(nip);
+            if(result.IsNullOrEmpty())
+            {
+                return BadRequest($"No client in db with nip number: {nip}");
+            }
+            return result;
+        }
     }
 }

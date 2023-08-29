@@ -29,13 +29,22 @@ namespace Invoicing.Services
         }
         public async Task<bool> EditCustomerAsync(CustomerDTO customerDTO, Guid guid)
         {
-            var result = _connectMssql.customers.Find(guid);
+            var result = _connectMssql.customers.FirstOrDefault(f => f.id.Equals(guid));
             if(result == null)
             {
                 return false;
             }
-            var editData = _mapper.Map<Customer>(result);
-            await _connectMssql.customers.AddAsync(editData);
+            result.email = customerDTO.email;
+            result.NIP = customerDTO.NIP;
+            result.Address = customerDTO.Address;
+            result.City = customerDTO.City;
+            result.PostalCode = customerDTO.PostalCode;
+            result.Country = customerDTO.Country;
+            result.Name = customerDTO.Name;
+            result.Description = customerDTO.Description;
+            result.Phone = customerDTO.Phone;
+            result.Region  = customerDTO.Region;
+            result.Regon = customerDTO.Regon;
             await _connectMssql.SaveChangesAsync();
             return true;
         }
