@@ -25,7 +25,7 @@
         PTU_C = 5,
         PTU_D = 0,
         PTU_E = 0, // ZW
-        PTU_F = -1, // not used
+        PTU_F = -1, // used only when it is technical zero value is 0%
         PTU_G = -1 // not used
     }
   }

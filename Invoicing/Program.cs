@@ -1,6 +1,7 @@
 using FluentValidation;
 using Invoicing.DB;
 using Invoicing.DTO;
+using Invoicing.Middleware;
 using Invoicing.Models;
 using Invoicing.Services;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<CustomerDTOValistion>();
 builder.Services.AddScoped<IValidator<Seller>, SellerValidation>();
 builder.Services.AddValidatorsFromAssemblyContaining<SellerValidation>();
 builder.Services.AddScoped<Validation>();
+builder.Services.AddScoped<MiddlewareServices>();
 builder.Services.AddScoped<ICustomerServices, CustomerServices>();
 builder.Services.AddScoped<ISellerServices, SellerServices>();
 var app = builder.Build();
@@ -32,7 +34,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<MiddlewareServices>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
