@@ -20,15 +20,14 @@ namespace Invoicing.Controllers
         [HttpPost("CreateInvoceDB")]
         public ActionResult<InvoceDB>CreateInvoceDB(InvoceDB invoceDB)
         {
+            invoceDB.InvoceNumber = _iinvoce.InvoceIncrement();
             return _iinvoce.addInvoceDB(invoceDB);
         }
 
-
         [HttpPost("CreateInvoce")]
-        public ActionResult<Invoce> CreateInvoce(string InvoceNumber)
+        public ActionResult<string> CreateInvoce(string InvoceNumber)
         {
             return _iinvoce.addInvoce(InvoceNumber);
         }
-
     }
 }

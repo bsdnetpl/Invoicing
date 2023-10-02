@@ -8,9 +8,10 @@ namespace Invoicing.Services
     {
         public InvoceDB addInvoceDB(InvoceDB invoceDB);
 
-        public Invoce addInvoce(string InvoceNumber);
+        public string addInvoce(string InvoceNumber);
 
         public List<Invoce> SeekInvoce(string numberInvoce);
+        string InvoceIncrement();
 
     }
 }
