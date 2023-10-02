@@ -28,6 +28,7 @@ namespace Invoicing.Services
                 invoceDB.Price_Brutto = kalk.AddProcent(invoceDB.Price_netto, Convert.ToDouble(invoceDB.Vat));
                 invoceDB.Tax_Vat = Math.Round(invoceDB.Price_Brutto - invoceDB.Price_netto, 2);
             }
+            invoceDB.dateTimeCreateInvoce = DateTime.Now;
             _connectMssql.invoceDBs.Add(invoceDB);
             _connectMssql.SaveChanges();
             return invoceDB;
@@ -56,23 +57,31 @@ namespace Invoicing.Services
                 invoce.NameConsument = "Test";
                 _connectMssql.invoces.Add(invoce);
                 _connectMssql.SaveChanges();
-             
-            
-     
-            return "Invoce add to DB";
+                return "Invoce add to DB";
         }
         public List<Invoce> SeekInvoce(string numberInvoce)
         {
             return _connectMssql.invoces.Where(x => x.InvoceNumber == numberInvoce).ToList();
         }
 
-        public string InvoceIncrement()
+        public string InvoceIncrement(int format)
         {
             var result = _connectMssql.sellers.FirstOrDefault();
             int increment = Int32.Parse(result.Invoce_number);
             result.Invoce_number = Convert.ToString(increment+=1);
             _connectMssql.SaveChanges();
-            return increment.ToString();
+            var mont = DateTime.Now.ToString("MM");
+            var Year = DateTime.Now.ToString("yyyy");
+            string Numeration ="FV";
+            if (format == 0)
+            {
+                Numeration = increment.ToString() + "/" + mont + "/" + Year;
+            }
+            if (format == 1)
+            {
+                Numeration = increment.ToString() + "/" + Year;
+            }
+            return Numeration;
         }
     }
 }

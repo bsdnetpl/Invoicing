@@ -20,7 +20,7 @@ namespace Invoicing.Controllers
         [HttpPost("CreateInvoceDB")]
         public ActionResult<InvoceDB>CreateInvoceDB(InvoceDB invoceDB)
         {
-            invoceDB.InvoceNumber = _iinvoce.InvoceIncrement();
+            invoceDB.InvoceNumber = _iinvoce.InvoceIncrement(0); // format number 0 = number/month/year  1 = number/year
             return _iinvoce.addInvoceDB(invoceDB);
         }
 

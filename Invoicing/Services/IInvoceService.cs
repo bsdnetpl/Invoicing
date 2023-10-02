@@ -11,7 +11,6 @@ namespace Invoicing.Services
         public string addInvoce(string InvoceNumber);
 
         public List<Invoce> SeekInvoce(string numberInvoce);
-        string InvoceIncrement();
-
+        string InvoceIncrement(int format);
     }
 }
