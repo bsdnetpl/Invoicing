@@ -3,7 +3,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 
-ENV DOTNET_URLS=http://+:5000
+EXPOSE 5000
+ENV DOTNET_URLS=https://+:5000
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release

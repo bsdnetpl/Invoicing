@@ -28,6 +28,10 @@ namespace Invoicing.Services
                 invoceDB.Price_Brutto = kalk.AddProcent(invoceDB.Price_netto, Convert.ToDouble(invoceDB.Vat));
                 invoceDB.Tax_Vat = Math.Round(invoceDB.Price_Brutto - invoceDB.Price_netto, 2);
             }
+            if(invoceDB.Payment_type == "string")
+            {
+                invoceDB.Payment_type = "Gotówka";
+            }
             invoceDB.dateTimeCreateInvoce = DateTime.Now;
             _connectMssql.invoceDBs.Add(invoceDB);
             _connectMssql.SaveChanges();
